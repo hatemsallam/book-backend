@@ -9,7 +9,7 @@ const cors = require('cors');
 const mongoose = require('mongoose')
 const server = express();
 
-// const SchemaModel = require('./SchemaModel');
+const Collections = require('./Collections');
 
 server.use(cors());
 
@@ -23,23 +23,7 @@ mongoose.connect('mongodb://localhost:27017/book', {useNewUrlParser: true, useUn
 
 
 
-// create a schema
-const bookSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  status: String,
-  email: String
-});
 
-const ownerSchema = new mongoose.Schema({
-ownerName: String,
-books : [bookSchema]
-});
-
-
-//compile the schema into a model
-const myBookModel = mongoose.model('books', bookSchema);
-const ownerModel = mongoose.model('Owner', ownerSchema);
 
 
 
@@ -47,68 +31,73 @@ const ownerModel = mongoose.model('Owner', ownerSchema);
 
 
 function seedBookCollection() {
-  const harryPotter = new myBookModel({ 
+  const harryPotter = new Collections.myBookModel({ 
       title: 'HarryPotter',
     description: 'fantasy novel written by British author J. K. Rowling',
     status: 'Available',
-    email: 'harrypotter@gmail.com'
+    image : 'https://is5-ssl.mzstatic.com/image/thumb/Music124/v4/b4/37/51/b437512a-7568-3b89-efae-fb9b95f373c3/HP8Film_V_DD_KA_TT_2000x3000_300dpi_CA.jpg/1200x630bb.png'
+    
   });
 
-  const forrestGump = new myBookModel({ 
+  const forrestGump = new Collections.myBookModel({ 
     title: 'Forrest Gump',
   description: 'Forrest Gump is a 1986 novel by Winston Groom',
   status: 'Available',
-  email: 'forrestgump@gmail.com'
+  image: 'https://play-lh.googleusercontent.com/ToGy2Cue0epHBdeRkq3dntz8on4ogI1UlKLGqMvgCptTwmpMWVkIxojwVUuvIjrMIFz2UiNjW73xcuofHQ'
+  
 });
 
-const theGodFather  = new myBookModel({ 
+const theGodFather  = new Collections.myBookModel({ 
   title: 'The Godfather',
 description: 'an absorbing, dark thriller that fascinates, horrifies, and entertains',
 status: 'Available',
-email: 'thegodfather@gmail.com'
+image: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/06/73/23/1c.jpg'
+
 });
-  //save the data that we created 
-  harryPotter.save();
-  forrestGump.save();
-  theGodFather.save();
+  // save the data that we created 
+  // harryPotter.save();
+  // forrestGump.save();
+  // theGodFather.save();
 }
 
 // seedBookCollection();
 
 
 function seedOwnerCollection() {
-  const hatem = new ownerModel ({
-      ownerName: 'hatem',
+  const hatem = new Collections.ownerModel ({
+      email: 'hatemsallam15@gmail.com',
       books : [
           {
             title: 'HarryPotter',
             description: 'fantasy novel written by British author J. K. Rowling',
             status: 'Available',
-            email: 'harrypotter@gmail.com'
+            image: 'https://is5-ssl.mzstatic.com/image/thumb/Music124/v4/b4/37/51/b437512a-7568-3b89-efae-fb9b95f373c3/HP8Film_V_DD_KA_TT_2000x3000_300dpi_CA.jpg/1200x630bb.png'
+            
           },
           {
             title: 'Forrest Gump',
             description: 'Forrest Gump is a 1986 novel by Winston Groom',
             status: 'Available',
-            email: 'forrestgump@gmail.com'
+            image: 'https://play-lh.googleusercontent.com/ToGy2Cue0epHBdeRkq3dntz8on4ogI1UlKLGqMvgCptTwmpMWVkIxojwVUuvIjrMIFz2UiNjW73xcuofHQ'
+            
           }
       ]
   })
 
-  const abdalla = new ownerModel({
-      ownerName: 'abdalla',
+  const abdalla = new Collections.ownerModel({
+      email: 'a.hirzalla@hotmail.com',
       books : [
           {
             title: 'The Godfather',
             description: 'an absorbing, dark thriller that fascinates, horrifies, and entertains',
             status: 'Available',
-            email: 'thegodfather@gmail.com'
+            image : 'https://media.tacdn.com/media/attractions-splice-spp-674x446/06/73/23/1c.jpg'
           }
       ]
   })
 
-  hatem.save();
-  abdalla.save();
+  // hatem.save();
+  // abdalla.save();
 }
 
 
@@ -119,22 +108,22 @@ function seedOwnerCollection() {
 
 
 // http://localhost:3001/
-server.get('/book',getBooksHandler);
+server.get('/books',getBooksHandler);
 
 
 
 
-// http://localhost:3001/book?name=hatem
+// http://localhost:3001/books?email=hatemsallam15@gmail.com
 function getBooksHandler(req,res) {
-  const reqOwnerName = req.query.name;
+  const email = req.query.email;
   // search 
-  console.log(reqOwnerName)
-  ownerModel.find({ownerName:reqOwnerName},function(err,resultData){
+  console.log(email)
+  Collections.ownerModel.find({email:email},function(err,resultData){
       if(err) {
           console.log('Error');
       }
       else {
-          console.log(resultData);
+          console.log(resultData[0]);
           console.log(resultData[0].books);
           res.send(resultData[0].books);
       }
