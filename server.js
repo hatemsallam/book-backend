@@ -54,10 +54,30 @@ status: 'Available',
 image: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/06/73/23/1c.jpg'
 
 });
+
+const hunterXhunter  = new Collections.myBookModel({ 
+  title: 'Hunter x Hunter',
+description: 'Hunter x Hunter is a 1986 novel by Winston Groom',
+status: 'Available',
+image: 'https://m.media-amazon.com/images/M/MV5BZjNmZDhkN2QtNDYyZC00YzJmLTg0ODUtN2FjNjhhMzE3ZmUxXkEyXkFqcGdeQXVyNjc2NjA5MTU@._V1_.jpg'
+
+});
+
+const attackOnTitan  = new Collections.myBookModel({ 
+  title: 'Attack on titan',
+description: 'Attack on titan is a 1986 novel by Winston Groom',
+status: 'Available',
+image: 'https://static2.cbrimages.com/wordpress/wp-content/uploads/2020/09/Attack-on-Titan-Final-Season-Poster-Header.jpg'
+
+});
+
+
   // save the data that we created 
   // harryPotter.save();
   // forrestGump.save();
   // theGodFather.save();
+  // attackOnTitan.save();
+  // hunterXhunter.save();
 }
 
 // seedBookCollection();
@@ -80,6 +100,13 @@ function seedOwnerCollection() {
             status: 'Available',
             image: 'https://play-lh.googleusercontent.com/ToGy2Cue0epHBdeRkq3dntz8on4ogI1UlKLGqMvgCptTwmpMWVkIxojwVUuvIjrMIFz2UiNjW73xcuofHQ'
             
+          },
+          {
+            title: 'Attack on titan',
+            description: 'Attack on titan is a 1986 novel by Winston Groom',
+            status: 'Available',
+            image: 'https://static2.cbrimages.com/wordpress/wp-content/uploads/2020/09/Attack-on-Titan-Final-Season-Poster-Header.jpg'
+            
           }
       ]
   })
@@ -92,6 +119,20 @@ function seedOwnerCollection() {
             description: 'an absorbing, dark thriller that fascinates, horrifies, and entertains',
             status: 'Available',
             image : 'https://media.tacdn.com/media/attractions-splice-spp-674x446/06/73/23/1c.jpg'
+          },
+          {
+            title: 'Forrest Gump',
+            description: 'Forrest Gump is a 1986 novel by Winston Groom',
+            status: 'Available',
+            image: 'https://play-lh.googleusercontent.com/ToGy2Cue0epHBdeRkq3dntz8on4ogI1UlKLGqMvgCptTwmpMWVkIxojwVUuvIjrMIFz2UiNjW73xcuofHQ'
+            
+          },
+          {
+            title: 'Hunter x Hunter',
+            description: 'Hunter x Hunter is a 1986 novel by Winston Groom',
+            status: 'Available',
+            image: 'https://m.media-amazon.com/images/M/MV5BZjNmZDhkN2QtNDYyZC00YzJmLTg0ODUtN2FjNjhhMzE3ZmUxXkEyXkFqcGdeQXVyNjc2NjA5MTU@._V1_.jpg'
+            
           }
       ]
   })
