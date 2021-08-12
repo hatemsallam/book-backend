@@ -150,6 +150,8 @@ function seedOwnerCollection() {
 
 // http://localhost:3001/
 server.get('/books',getBooksHandler);
+server.post('/books',addBooksHandler);
+server.delete('/books/:id',deleteBooksHandler)
 
 
 
@@ -170,6 +172,65 @@ function getBooksHandler(req,res) {
       }
   })
 }
+
+// http://localhost:3001/books
+function addBooksHandler(req,res) {
+  
+  // const ownerName = req.body.ownerName;
+  // const catName = req.body.catName;
+  // const catBreed = req.body.catBreed;
+  
+  // Restructuring assignment
+  const {email, title, description, status } = req.body;
+  console.log(req.body);
+  const newBook= {title:title, description:description, status:status}
+  Collections.ownerModel.find({email : email},(err,resultData) => {
+      if(err)
+      {
+          res.send('not working');
+      }
+      else
+      {
+        console.log(email);
+        console.log(resultData[0].books);
+         resultData[0].books.push(newBook);
+         resultData[0].save();
+         res.send(newBook);
+      }
+  })
+  
+}
+
+function deleteBooksHandler(req,res) {
+const index = req.params.id ;
+const email = req.query.email ; 
+
+Collections.ownerModel.find({email:email},(err,resultData) => {
+
+  if(err)
+  {
+      res.send('not working');
+  }
+  else {
+    const deleteBook = resultData[0].books.filter((book,idx)=> idx != index);
+    resultData[0].books = deleteBook ; 
+    resultData[0].save()
+    res.send(resultData[0].books)
+  }
+
+
+
+})
+
+
+}
+
+
+
+
+
+
+
 server.listen(PORT,() => {
   console.log(`Listening on PORT ${PORT}`);
 })
