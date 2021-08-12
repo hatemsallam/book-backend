@@ -152,6 +152,7 @@ function seedOwnerCollection() {
 server.get('/books',getBooksHandler);
 server.post('/books',addBooksHandler);
 server.delete('/books/:id',deleteBooksHandler)
+server.put('/book/:id',updateBooksHandler)
 
 
 
@@ -225,7 +226,26 @@ Collections.ownerModel.find({email:email},(err,resultData) => {
 
 }
 
-
+function updateBooksHandler  (req,res) {
+  const id = req.params.id; 
+  const {email, title, description, status } = req.body;
+  console.log(email,title , description , status)
+  Collections.ownerModel.findOne({email: email}, (err, resultData) =>{
+    if(err) {
+      res.status(500).send('Error',err);
+    }
+    else {
+      console.log(resultData)
+     resultData.books.splice(id , 1 , {
+      title : title,
+      description : description,
+      status : status
+     })
+      resultData.save();
+      res.status(200).send(resultData.books);
+    }
+  })
+}
 
 
 
